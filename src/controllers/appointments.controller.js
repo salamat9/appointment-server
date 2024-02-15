@@ -76,7 +76,7 @@ async function httpGetAvailableTimeSlots(req, res) {
 			currentTime.add(gradationCells, 'minutes');
 		}
 
-		res.status(200).json({ timeSlots });
+		res.status(200).json(timeSlots);
 	} catch (err) {
 		res.status(err.status).json({ error: err.message });
 	}
