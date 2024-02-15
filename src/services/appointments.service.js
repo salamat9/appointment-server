@@ -1,6 +1,23 @@
 const DatabaseError = require('../utils/errorTypes/databaseError');
 const appointmentsCollection = require('../models/appointment.model');
 
+async function getAppointmentByEmployeeIdAndDateTime({
+	employeeId,
+	startTime,
+	endTime,
+}) {
+	try {
+		return await appointmentsCollection.findOne({
+			employeeId,
+			startTime: { $gte: startTime },
+			endTime: { $lte: endTime },
+		});
+	} catch (err) {
+		console.log(err);
+		throw new DatabaseError();
+	}
+}
+
 async function getAppointmentsByEmployeeIdAndDate({ employeeId, date }) {
 	try {
 		const startOfDay = date.clone().startOf('day');
@@ -14,6 +31,7 @@ async function getAppointmentsByEmployeeIdAndDate({ employeeId, date }) {
 			})
 			.sort({ startTime: 1 });
 	} catch (err) {
+		console.log(err);
 		throw new DatabaseError();
 	}
 }
@@ -34,11 +52,13 @@ async function createAppointment({
 			description,
 		});
 	} catch (err) {
+		console.log(err);
 		throw new DatabaseError();
 	}
 }
 
 module.exports = {
+	getAppointmentByEmployeeIdAndDateTime,
 	getAppointmentsByEmployeeIdAndDate,
 	createAppointment,
 };

@@ -78,14 +78,14 @@ async function httpGetAvailableTimeSlots(req, res) {
 
 		res.status(200).json(timeSlots);
 	} catch (err) {
+		console.log(err);
 		res.status(err.status).json({ error: err.message });
 	}
 }
 
 async function httpCreateAppointment(req, res) {
 	try {
-		const { employeeId, startTime, endTime, title, description } =
-			req.body;
+		const { employeeId, startTime, endTime, title, description } = req.body;
 
 		const employee = await getEmployeeById(employeeId);
 		if (!employee) {
@@ -109,6 +109,7 @@ async function httpCreateAppointment(req, res) {
 
 		res.status(201).json(newAppointment);
 	} catch (err) {
+		console.log(err);
 		res.status(err.status).json({ error: err.message });
 	}
 }
