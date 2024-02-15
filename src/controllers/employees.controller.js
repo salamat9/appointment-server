@@ -12,7 +12,7 @@ async function httpGetEmployeeById(req, res) {
 
 		const employee = await getEmployeeById(id);
 		if (!employee) {
-			throw new DataNotFoundError(`Employee with id: ${id} not found!`);
+			throw new DataNotFoundError(EMPLOYEE_NOT_FOUND_ERROR(id));
 		}
 
 		res.status(200).json(employee);
